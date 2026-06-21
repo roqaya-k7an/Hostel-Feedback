@@ -73,8 +73,8 @@ document.querySelectorAll(".rating-card").forEach((card) => {
   const cat = card.dataset.cat;
   const commentBox = card.querySelector(".comment-box");
   const requiredNotice = card.querySelector(".comment-required-notice");
-  const emojiEl = card.querySelector(".rating-emoji");
-  
+  const selectedEmojiEl = card.querySelector(".selected-emoji");
+
   card.querySelectorAll(".star-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const val = parseInt(btn.dataset.val);
@@ -82,17 +82,21 @@ document.querySelectorAll(".rating-card").forEach((card) => {
       card.querySelectorAll(".star-btn").forEach((b) => {
         b.classList.remove("selected", "low");
       });
-      // highlight selected (and all below for star feel)
+      // highlight selected
       card.querySelectorAll(".star-btn").forEach((b) => {
         if (parseInt(b.dataset.val) === val) {
           b.classList.add("selected");
           if (val <= LOW) b.classList.add("low");
         }
       });
-      // Update emoji
-      emojiEl.textContent = EMOJI_MAP[val];
-      // Trigger flying animation
-      triggerEmojiAnimation(card);
+      // Update emoji display and highlight in emoji scale
+      selectedEmojiEl.textContent = EMOJI_MAP[val];
+      triggerEmojiAnimation(selectedEmojiEl);
+      // Highlight matching emoji item in scale
+      card.querySelectorAll(".emoji-item").forEach((item) => {
+        const itemScore = parseInt(item.dataset.score);
+        item.style.opacity = itemScore === val ? "1" : "0.4";
+      });
       // Low score => required comment
       if (val <= LOW) {
         commentBox.classList.add("show", "required");
@@ -109,11 +113,10 @@ document.querySelectorAll(".rating-card").forEach((card) => {
   if (ta) ta.addEventListener("input", () => { state.comments[cat] = ta.value; });
 });
 
-function triggerEmojiAnimation(card) {
-  const emojiEl = card.querySelector(".rating-emoji");
-  emojiEl.classList.remove("fly");
+function triggerEmojiAnimation(emojiEl) {
+  emojiEl.classList.remove("pulse");
   void emojiEl.offsetWidth; // Trigger reflow
-  emojiEl.classList.add("fly");
+  emojiEl.classList.add("pulse");
 }
 
 // ---- Feedback want-to-say toggles ----------------------------------------
