@@ -65,9 +65,16 @@ document.querySelectorAll("[data-residency]").forEach((c) => {
 });
 
 // ---- Star ratings ---------------------------------------------------------
+const EMOJI_MAP = {
+  1: "😞", 2: "😕", 3: "😐", 4: "😊", 5: "😄"
+};
+
 document.querySelectorAll(".rating-card").forEach((card) => {
   const cat = card.dataset.cat;
   const commentBox = card.querySelector(".comment-box");
+  const requiredNotice = card.querySelector(".comment-required-notice");
+  const emojiEl = card.querySelector(".rating-emoji");
+  
   card.querySelectorAll(".star-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const val = parseInt(btn.dataset.val);
@@ -82,12 +89,18 @@ document.querySelectorAll(".rating-card").forEach((card) => {
           if (val <= LOW) b.classList.add("low");
         }
       });
+      // Update emoji
+      emojiEl.textContent = EMOJI_MAP[val];
+      // Trigger flying animation
+      triggerEmojiAnimation(card);
       // Low score => required comment
       if (val <= LOW) {
         commentBox.classList.add("show", "required");
+        requiredNotice.style.display = "block";
       } else {
         commentBox.classList.remove("required");
         commentBox.classList.add("show");
+        requiredNotice.style.display = "none";
       }
       card.classList.remove("invalid");
     });
@@ -95,6 +108,13 @@ document.querySelectorAll(".rating-card").forEach((card) => {
   const ta = card.querySelector("textarea");
   if (ta) ta.addEventListener("input", () => { state.comments[cat] = ta.value; });
 });
+
+function triggerEmojiAnimation(card) {
+  const emojiEl = card.querySelector(".rating-emoji");
+  emojiEl.classList.remove("fly");
+  void emojiEl.offsetWidth; // Trigger reflow
+  emojiEl.classList.add("fly");
+}
 
 // ---- Feedback want-to-say toggles ----------------------------------------
 document.querySelectorAll(".feedback-field").forEach((field) => {

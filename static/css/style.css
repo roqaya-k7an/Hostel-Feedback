@@ -206,7 +206,7 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 .field input:focus, .field select:focus, .field textarea:focus {
   outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(22,160,133,.15);
 }
-.field textarea { min-height: 110px; resize: vertical; }
+.field textarea { min-height: 140px; resize: vertical; }
 .field .hint { font-size: .82rem; color: var(--muted); margin-top: 5px; }
 .field-error { color: var(--critical); font-size: .82rem; margin-top: 5px; display: none; }
 .field.invalid input, .field.invalid select { border-color: var(--critical); }
@@ -227,13 +227,49 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 /* Rating rows */
 .rating-card {
   border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 16px; margin-bottom: 14px;
-  background: var(--surface);
+  background: #faf8fe;
+}
+[data-step="survey"] {
+  background: rgba(186, 162, 235, 0.12);
+  padding: 20px;
+  border-radius: var(--radius);
+  margin: -20px -20px 0;
 }
 .rating-card.invalid { border-color: var(--critical); }
 .rating-card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .rating-card__num { width: 26px; height: 26px; border-radius: 8px; background: var(--bg); color: var(--muted);
   display: grid; place-items: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
 .rating-card__title { font-weight: 600; }
+.rating-card__num-wrapper { position: relative; display: flex; align-items: center; gap: 6px; }
+.rating-emoji {
+  font-size: 1.3rem;
+  min-width: 22px;
+  text-align: center;
+  display: block;
+  opacity: 0;
+}
+.rating-emoji.fly {
+  animation: emojiFlying 0.8s ease-out forwards;
+}
+@keyframes emojiFlying {
+  0% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  25% {
+    transform: translateX(40px) translateY(-60px) scale(1.1) rotate(20deg);
+  }
+  50% {
+    transform: translateX(-30px) translateY(-80px) scale(0.9) rotate(-15deg);
+  }
+  75% {
+    transform: translateX(50px) translateY(-30px) scale(1.05) rotate(10deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(0) translateY(0) scale(0.5);
+  }
+}
 .stars { display: flex; gap: 8px; flex-wrap: wrap; }
 .star-btn {
   flex: 1; min-width: 56px; border: 1.5px solid var(--line); background: var(--surface);

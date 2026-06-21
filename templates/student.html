@@ -98,7 +98,10 @@
         {% for key, en, ar in categories %}
         <div class="rating-card" data-cat="{{ loop.index }}">
           <div class="rating-card__head">
-            <span class="rating-card__num">{{ loop.index }}</span>
+            <div class="rating-card__num-wrapper">
+              <span class="rating-card__num">{{ loop.index }}</span>
+              <span class="rating-emoji" data-cat="{{ loop.index }}"></span>
+            </div>
             <span class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</span>
           </div>
           <div class="stars">
@@ -109,7 +112,9 @@
             {% endfor %}
           </div>
           <div class="comment-box">
+            <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
             <textarea data-i18n-ph="survey_comment_ph"></textarea>
+            <div class="comment-required-notice" data-i18n="survey_mandatory_notice" style="display:none; margin-top:8px; font-size:.85rem; color:#E74C3C; font-weight:500;"></div>
           </div>
         </div>
         {% endfor %}

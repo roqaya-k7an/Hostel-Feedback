@@ -63,6 +63,7 @@ const I18N = {
     // Survey
     survey_title: "Rate your hostel services",
     survey_lead: "Tap a score from 1 (Very Poor) to 5 (Excellent). A score of 1–2 needs a short comment.",
+    survey_mandatory_notice: "Please tell us what went wrong — your comment helps us improve this service.",
     survey_comment_ph: "Please tell us what went wrong (required for low scores)…",
     survey_err_missing: "Please rate all services before continuing.",
     survey_err_comment: "A comment is required for any rating of 1 or 2.",
@@ -238,6 +239,7 @@ const I18N = {
 
     survey_title: "قيّم خدمات السكن",
     survey_lead: "اختر درجة من ١ (ضعيف جداً) إلى ٥ (ممتاز). الدرجة ١-٢ تتطلب تعليقاً قصيراً.",
+    survey_mandatory_notice: "أخبرنا بما حدث — تعليقك يساعدنا على تحسين هذه الخدمة.",
     survey_comment_ph: "أخبرنا بما حدث (مطلوب للدرجات المنخفضة)…",
     survey_err_missing: "يرجى تقييم جميع الخدمات قبل المتابعة.",
     survey_err_comment: "التعليق مطلوب لأي تقييم بدرجة ١ أو ٢.",
