@@ -48,7 +48,7 @@ function showStep() {
     return;
   }
   navActions.style.display = "flex";
-  btnBack.style.visibility = idx === 0 ? "hidden" : "visible";
+  btnBack.style.visibility = "visible";
 
   // Last data step before confirm => Submit
   const isLastData = flowSteps()[idx + 1] === "confirm";
@@ -299,6 +299,7 @@ btnNext.addEventListener("click", async () => {
 
 btnBack.addEventListener("click", () => {
   if (idx > 0) { idx--; showStep(); }
+  else { window.location = "/start"; }   // first step → back to the menu
 });
 
 // ---- Localize category titles on lang change ------------------------------

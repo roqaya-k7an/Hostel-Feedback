@@ -15,7 +15,11 @@
   </div>
 </header>
 
-<div class="center-wrap">
+<div class="container page-back-wrap">
+  <a href="{{ url_for('role_select') }}" class="page-back" data-i18n="back">Back</a>
+</div>
+
+<div class="center-wrap" style="min-height:calc(100vh - 130px);">
   <div class="card login-card">
     <div class="login-icon">🔐</div>
     <h2 data-i18n="admin_title">Admin Login</h2>
