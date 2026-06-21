@@ -2,11 +2,11 @@
    Admin dashboard — fetch analytics, render charts, filters, export, import
    =========================================================================== */
 const COLORS = {
-  navy: "#1F3A5F", teal: "#16A085", gold: "#E8A83C",
+  navy: "#3A1E72", teal: "#7C5CDB", gold: "#A56ABD",
   success: "#27AE60", warning: "#F39C12", critical: "#E74C3C",
-  palette: ["#1F3A5F", "#16A085", "#E8A83C", "#2C7BB6", "#27AE60",
-            "#9B59B6", "#E67E22", "#16A085", "#34495E", "#C0392B",
-            "#2980B9", "#8E44AD"],
+  palette: ["#3A1E72", "#533989", "#6E3482", "#7C5CDB", "#8363C6",
+            "#A56ABD", "#BAA2EB", "#9B59B6", "#5DADE2", "#27AE60",
+            "#E67E22", "#C0392B"],
 };
 
 let charts = {};
@@ -74,7 +74,7 @@ function renderCategoryChart(data) {
         label: t("kpi_sat"),
         data: data.category_avgs.map((c) => c.avg),
         backgroundColor: data.category_avgs.map((c) =>
-          c.avg >= 3.5 ? COLORS.success : c.avg >= 2.5 ? COLORS.warning : COLORS.critical),
+          c.avg >= 3.5 ? COLORS.teal : c.avg >= 2.5 ? COLORS.gold : COLORS.critical),
         borderRadius: 6,
       }],
     },
@@ -95,7 +95,7 @@ function renderDistChart(data) {
       labels: [t("rate_1"), t("rate_2"), t("rate_3"), t("rate_4"), t("rate_5")],
       datasets: [{
         data: data.satisfaction_distribution,
-        backgroundColor: [COLORS.critical, "#E67E22", COLORS.warning, "#5DADE2", COLORS.success],
+        backgroundColor: [COLORS.critical, "#E67E22", "#BAA2EB", "#8363C6", "#533989"],
         borderWidth: 2, borderColor: "#fff",
       }],
     },
@@ -114,7 +114,7 @@ function renderTrendChart(data) {
       datasets: [{
         label: t("kpi_sat"),
         data: data.trend.map((p) => p.avg),
-        borderColor: COLORS.teal, backgroundColor: "rgba(22,160,133,.12)",
+        borderColor: COLORS.teal, backgroundColor: "rgba(124,92,219,.14)",
         fill: true, tension: .35, pointRadius: 4, pointBackgroundColor: COLORS.teal,
       }],
     },

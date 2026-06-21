@@ -3,23 +3,23 @@
    Modern SaaS analytics aesthetic (Stripe / Notion / Linear feel)
    =========================================================================== */
 :root {
-  --navy:      #1F3A5F;
-  --navy-deep: #16233D;
-  --teal:      #16A085;
-  --teal-dark: #0E5A46;
-  --gold:      #E8A83C;
-  --bg:        #F8F9FA;
+  --navy:      #3A1E72;
+  --navy-deep: #2A1257;
+  --teal:      #7C5CDB;
+  --teal-dark: #6E3482;
+  --gold:      #BAA2EB;
+  --bg:        #F4F2FD;
   --surface:   #FFFFFF;
-  --ink:       #1C2733;
-  --muted:     #647184;
-  --line:      #E5E9EF;
+  --ink:       #211A3A;
+  --muted:     #6E6790;
+  --line:      #ECE7F8;
   --success:   #27AE60;
   --warning:   #F39C12;
   --critical:  #E74C3C;
-  --radius:    14px;
-  --radius-sm: 9px;
-  --shadow:    0 2px 8px rgba(20,35,61,.08);
-  --shadow-lg: 0 12px 40px rgba(20,35,61,.16);
+  --radius:    18px;
+  --radius-sm: 12px;
+  --shadow:    0 2px 10px rgba(42,18,87,.08);
+  --shadow-lg: 0 16px 46px rgba(42,18,87,.18);
   --serif: "Sora", "Georgia", serif;
   --sans:  "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -29,10 +29,10 @@
 body {
   font-family: var(--sans);
   background:
-    radial-gradient(900px 520px at 100% -8%, rgba(22,160,133,.12), transparent 55%),
-    radial-gradient(820px 500px at -10% 112%, rgba(232,168,60,.12), transparent 55%),
-    radial-gradient(700px 600px at 50% 120%, rgba(31,58,95,.06), transparent 60%),
-    linear-gradient(180deg, #F4F7FB 0%, #E9F0F8 100%);
+    radial-gradient(900px 520px at 100% -8%, rgba(124,92,219,.16), transparent 55%),
+    radial-gradient(820px 500px at -10% 112%, rgba(186,162,235,.22), transparent 55%),
+    radial-gradient(700px 600px at 50% 120%, rgba(58,30,114,.06), transparent 60%),
+    linear-gradient(180deg, #F7F4FE 0%, #EFE9FC 100%);
   background-attachment: fixed;
   color: var(--ink);
   line-height: 1.55;
@@ -91,8 +91,8 @@ html[dir="rtl"] .topbar__right { flex-direction: row-reverse; }
 .btn--primary:hover { background: var(--navy-deep); box-shadow: var(--shadow-lg); }
 .btn--teal { background: var(--teal); color: #fff; box-shadow: var(--shadow); }
 .btn--teal:hover { background: var(--teal-dark); }
-.btn--gold { background: var(--gold); color: #3a2a07; box-shadow: var(--shadow); }
-.btn--gold:hover { filter: brightness(1.05); }
+.btn--gold { background: linear-gradient(135deg, #FFFFFF, var(--gold)); color: #2A1257; box-shadow: var(--shadow-lg); }
+.btn--gold:hover { filter: brightness(1.03); transform: translateY(-2px); }
 .btn--ghost { background: transparent; color: var(--navy); border-color: var(--line); }
 .btn--ghost:hover { background: #eef1f5; }
 .btn--lg { padding: 16px 38px; font-size: 1.05rem; }
@@ -129,8 +129,8 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 .hero {
   min-height: 100vh; position: relative; overflow: hidden;
   background:
-    radial-gradient(1100px 500px at 80% -10%, rgba(22,160,133,.22), transparent 60%),
-    radial-gradient(900px 480px at 0% 110%, rgba(232,168,60,.18), transparent 55%),
+    radial-gradient(1100px 520px at 80% -10%, rgba(124,92,219,.38), transparent 60%),
+    radial-gradient(900px 480px at 0% 110%, rgba(186,162,235,.28), transparent 55%),
     linear-gradient(160deg, var(--navy-deep), var(--navy));
   color: #fff; display: flex; flex-direction: column;
 }
@@ -141,7 +141,7 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 .hero__eyebrow {
   display: inline-flex; align-items: center; gap: 8px; font-size: .8rem; font-weight: 600;
   letter-spacing: .12em; text-transform: uppercase; color: var(--gold);
-  border: 1px solid rgba(232,168,60,.4); padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+  border: 1px solid rgba(186,162,235,.5); padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
 }
 .hero h1 { color: #fff; font-size: clamp(2.4rem, 5vw, 3.7rem); margin-bottom: 18px; }
 .hero h1 .accent { color: var(--gold); }
