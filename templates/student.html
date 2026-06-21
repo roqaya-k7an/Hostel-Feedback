@@ -98,22 +98,31 @@
         {% for key, en, ar in categories %}
         <div class="rating-card" data-cat="{{ loop.index }}">
           <div class="rating-card__head">
-            <div class="rating-card__num-wrapper">
-              <span class="rating-card__num">{{ loop.index }}</span>
-              <span class="rating-emoji" data-cat="{{ loop.index }}"></span>
+            <div class="rating-card__num">{{ loop.index }}</div>
+            <div class="rating-card__content">
+              <h3 class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</h3>
+              <div class="emoji-scale">
+                <div class="emoji-item" data-score="1">😞</div>
+                <div class="emoji-item" data-score="2">😕</div>
+                <div class="emoji-item" data-score="3">😐</div>
+                <div class="emoji-item" data-score="4">😊</div>
+                <div class="emoji-item" data-score="5">😄</div>
+              </div>
             </div>
-            <span class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</span>
+            <div class="rating-selected-emoji">
+              <span class="selected-emoji" data-cat="{{ loop.index }}">—</span>
+            </div>
           </div>
           <div class="stars">
             {% for n in range(1, 6) %}
-            <button type="button" class="star-btn" data-val="{{ n }}">
-              <b>{{ n }}</b><small data-i18n="rate_{{ n }}"></small>
+            <button type="button" class="star-btn" data-val="{{ n }}" title="Rating {{ n }}">
+              <b>{{ n }}</b>
             </button>
             {% endfor %}
           </div>
           <div class="comment-box">
             <label data-i18n="survey_comment_ph" style="display:block; margin-bottom: 8px;"></label>
-            <textarea data-i18n-ph="survey_comment_ph"></textarea>
+            <textarea data-i18n-ph="survey_comment_ph" placeholder="Share details to help us improve..."></textarea>
             <div class="comment-required-notice" data-i18n="survey_mandatory_notice" style="display:none; margin-top:8px; font-size:.85rem; color:#E74C3C; font-weight:500;"></div>
           </div>
         </div>
