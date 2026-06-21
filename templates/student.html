@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block body %}
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a href="{{ url_for('cover') }}" class="brand">
+      <span class="brand__logo">II</span>
+      <span data-i18n="brand">IIUI Hostel Feedback</span>
+    </a>
+    <div class="topbar__right">
+      <div class="lang-toggle">
+        <button data-lang="en" class="active">EN</button>
+        <button data-lang="ar">عربي</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="flow">
+  <!-- Progress -->
+  <div class="progress" id="progressWrap">
+    <div class="progress__track"><div class="progress__fill" id="progressFill"></div></div>
+    <div class="progress__label"><span id="progressStep">Step 1</span><span id="progressPct">0%</span></div>
+  </div>
+
+  <!-- STEP 1: Residency -->
+  <section class="step active" data-step="residency">
+    <div class="card">
+      <h2 data-i18n="res_title">Are you currently residing in a campus hostel?</h2>
+      <p class="step__lead" data-i18n="res_lead">This helps us route you to the right questions.</p>
+      <div class="choice-grid">
+        <div class="choice" data-residency="yes">
+          <span class="choice__emoji">🏠</span>
+          <b data-i18n="res_yes">Yes, I'm a hostel resident</b>
+          <small data-i18n="res_yes_desc">I currently live in a university hostel.</small>
+        </div>
+        <div class="choice" data-residency="no">
+          <span class="choice__emoji">🚶</span>
+          <b data-i18n="res_no">No, I don't stay in a hostel</b>
+          <small data-i18n="res_no_desc">I'd still like to share interest in premium housing.</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2: Verification -->
+  <section class="step" data-step="verify">
+    <div class="card">
+      <h2 data-i18n="verify_title">Verify your identity</h2>
+      <p class="step__lead" data-i18n="verify_lead">Your Registration Number and Email must match our records.</p>
+      <div class="alert-box alert-box--err" id="verifyAlert"></div>
+
+      <div class="field" data-required>
+        <label data-i18n="f_student_id">Registration Number</label>
+        <input type="text" id="student_id" data-i18n-ph="f_student_id_ph">
+        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+      </div>
+      <div class="field" data-required>
+        <label data-i18n="f_email">University Email</label>
+        <input type="email" id="email" data-i18n-ph="f_email_ph">
+        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+      </div>
+      <div class="field" data-required>
+        <label data-i18n="f_full_name">Full Name</label>
+        <input type="text" id="full_name">
+        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+      </div>
+      <div class="field" data-required id="roomField">
+        <label data-i18n="f_room">Room Number</label>
+        <input type="text" id="room_number" data-i18n-ph="f_room_ph">
+        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+      </div>
+      <div class="field" data-required id="blockField">
+        <label data-i18n="f_block">Block</label>
+        <select id="block">
+          <option value="" data-i18n="f_block_ph">Select block</option>
+          {% for b in blocks %}<option value="{{ b }}">{{ b }}</option>{% endfor %}
+        </select>
+        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+      </div>
+      <div class="field" data-required id="levelField">
+        <label data-i18n="f_level">Academic Level</label>
+        <select id="academic_level">
+          <option value="" data-i18n="f_level_ph">Select level</option>
+          {% for l in levels %}<option value="{{ l }}">{{ l }}</option>{% endfor %}
+        </select>
+        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3: Survey -->
+  <section class="step" data-step="survey">
+    <div class="card">
+      <h2 data-i18n="survey_title">Rate your hostel services</h2>
+      <p class="step__lead" data-i18n="survey_lead">Tap a score from 1 to 5.</p>
+      <div class="alert-box alert-box--err" id="surveyAlert"></div>
+      <div id="ratingList">
+        {% for key, en, ar in categories %}
+        <div class="rating-card" data-cat="{{ loop.index }}">
+          <div class="rating-card__head">
+            <span class="rating-card__num">{{ loop.index }}</span>
+            <span class="rating-card__title" data-en="{{ en }}" data-ar="{{ ar }}">{{ en }}</span>
+          </div>
+          <div class="stars">
+            {% for n in range(1, 6) %}
+            <button type="button" class="star-btn" data-val="{{ n }}">
+              <b>{{ n }}</b><small data-i18n="rate_{{ n }}"></small>
+            </button>
+            {% endfor %}
+          </div>
+          <div class="comment-box">
+            <textarea data-i18n-ph="survey_comment_ph"></textarea>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4: Feedback -->
+  <section class="step" data-step="feedback">
+    <div class="card">
+      <h2 data-i18n="fb_title">Tell us more</h2>
+      <p class="step__lead" data-i18n="fb_lead">Optional — choose whether to comment on each area.</p>
+
+      {% for fid, label in [('main_issues','fb_main'), ('suggestions','fb_sugg'), ('additional_comments','fb_add')] %}
+      <div class="field feedback-field" data-fid="{{ fid }}">
+        <label data-i18n="{{ label }}"></label>
+        <div class="say-toggle">
+          <button type="button" data-say="yes" data-i18n="fb_want">I'd like to comment</button>
+          <button type="button" data-say="no" class="active" data-i18n="fb_nothing">Nothing to add</button>
+        </div>
+        <textarea id="{{ fid }}" data-i18n-ph="fb_ph" style="display:none;"></textarea>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- STEP 5: VIP -->
+  <section class="step" data-step="vip">
+    <div class="card">
+      <h2 data-i18n="vip_title">Premium (VIP) Housing</h2>
+      <div class="vip-banner">
+        <h3 data-i18n="vip_intro_title">A premium housing tier — would you want it?</h3>
+        <p data-i18n="vip_intro_lead">We're gauging interest in an upgraded option with:</p>
+        <ul>
+          <li>🔒 <span data-i18n="vip_b_privacy">Privacy</span></li>
+          <li>❄️ <span data-i18n="vip_b_ac">Air Conditioning</span></li>
+          <li>✨ <span data-i18n="vip_b_clean">Higher Cleanliness</span></li>
+          <li>🛡️ <span data-i18n="vip_b_safety">Improved Safety</span></li>
+          <li>⭐ <span data-i18n="vip_b_premium">Premium Facilities</span></li>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label data-i18n="vip_q_interested">Are you interested in VIP housing?</label>
+        <div class="choice-grid">
+          <div class="choice" data-vip="yes"><span class="choice__emoji">👍</span><b data-i18n="vip_yes">Yes, I'm interested</b></div>
+          <div class="choice" data-vip="no"><span class="choice__emoji">👎</span><b data-i18n="vip_no">No, not interested</b></div>
+        </div>
+      </div>
+
+      <!-- VIP YES branch -->
+      <div id="vipYes" style="display:none;">
+        <div class="field">
+          <label data-i18n="vip_pay_q">Would you pay 15,000–20,000 PKR?</label>
+          <div class="say-toggle" id="vipPay">
+            <button type="button" data-pay="Yes" data-i18n="vip_pay_yes">Yes</button>
+            <button type="button" data-pay="Maybe" data-i18n="vip_pay_maybe">Maybe</button>
+            <button type="button" data-pay="No" data-i18n="vip_pay_no">No</button>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="vip_features_q">Which features matter most?</label>
+          <div class="chip-grid" id="vipFeatures">
+            <div class="chip" data-feature="Privacy" data-i18n="vip_b_privacy">Privacy</div>
+            <div class="chip" data-feature="AC" data-i18n="vip_b_ac">AC</div>
+            <div class="chip" data-feature="Cleanliness" data-i18n="vip_b_clean">Cleanliness</div>
+            <div class="chip" data-feature="Safety" data-i18n="vip_b_safety">Safety</div>
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="vip_reason_q">Why would you switch?</label>
+          <textarea id="vip_reason" data-i18n-ph="fb_ph"></textarea>
+        </div>
+        <div class="field">
+          <label data-i18n="vip_improve_q">What improvements do you expect?</label>
+          <textarea id="vip_expected_improvements" data-i18n-ph="fb_ph"></textarea>
+        </div>
+        <div class="field">
+          <label data-i18n="vip_barriers_q">Any concerns or barriers?</label>
+          <textarea id="vip_barriers_yes" data-i18n-ph="fb_ph"></textarea>
+        </div>
+        <div class="field">
+          <label data-i18n="vip_contact_q">Contact details</label>
+          <input type="text" id="vip_phone" data-i18n-ph="vip_phone" style="margin-bottom:10px;">
+          <input type="email" id="vip_email" data-i18n-ph="vip_email">
+        </div>
+      </div>
+
+      <!-- VIP NO branch -->
+      <div id="vipNo" style="display:none;">
+        <div class="field">
+          <label data-i18n="vip_no_barriers_q">What's holding you back?</label>
+          <div class="chip-grid" id="vipBarriers">
+            <div class="chip" data-barrier="Price" data-i18n="vip_bar_price">Price</div>
+            <div class="chip" data-barrier="Location" data-i18n="vip_bar_location">Location</div>
+            <div class="chip" data-barrier="Satisfied with current housing" data-i18n="vip_bar_satisfied">Satisfied</div>
+            <div class="chip" data-barrier="Other" data-i18n="vip_bar_other">Other</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 6: Confirmation -->
+  <section class="step" data-step="confirm">
+    <div class="card confirm">
+      <div class="confirm__check">✓</div>
+      <h2 data-i18n="confirm_title">Thank you for your participation!</h2>
+      <p class="step__lead" data-i18n="confirm_msg">Your feedback is valuable and helps improve student living.</p>
+      <a href="{{ url_for('cover') }}" class="btn btn--primary" data-i18n="confirm_home">Back to Home</a>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <div class="step__actions" id="navActions">
+    <button class="btn btn--ghost" id="btnBack" data-i18n="back">Back</button>
+    <button class="btn btn--primary" id="btnNext" data-i18n="next">Next</button>
+  </div>
+</div>
+
+<script>
+  window.LOW_THRESHOLD = {{ low_threshold }};
+</script>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/student.js') }}"></script>
+{% endblock %}
