@@ -45,3 +45,16 @@ ACADEMIC_LEVELS = ["Bachelor's", "Master's", "PhD"]
 
 # A rating at or below this value forces a written comment
 LOW_RATING_THRESHOLD = 2
+
+# ---------------------------------------------------------------------------
+# Student verification
+# ---------------------------------------------------------------------------
+# When no roster is uploaded, students are verified by the *shape* of their
+# Registration Number instead. IIUI numbers use "/" and/or "-" as separators,
+# for example: 002136/MSDS/S24  or  4001-FBAS  or  002136-MSDS/S24
+# The pattern is intentionally lenient: two or more alphanumeric parts joined
+# by "/" or "-", with optional surrounding spaces and case-insensitive.
+REGISTRATION_PATTERN = r"^\s*[A-Za-z0-9]+([/\-][A-Za-z0-9]+)+\s*$"
+
+# Basic email shape check (something@something.something)
+EMAIL_PATTERN = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"

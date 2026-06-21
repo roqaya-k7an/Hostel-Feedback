@@ -93,6 +93,16 @@ def find_resident(student_id, email):
     return dict(row)
 
 
+def resident_exists(student_id):
+    """True if the roster contains this Registration Number (any email)."""
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT 1 FROM residents WHERE LOWER(TRIM(student_id)) = LOWER(TRIM(?)) LIMIT 1",
+            (student_id,),
+        ).fetchone()
+    return row is not None
+
+
 def submission_exists(student_id, room_number):
     """Duplicate prevention: one submission per Student ID (+ Room Number)."""
     with get_db() as conn:

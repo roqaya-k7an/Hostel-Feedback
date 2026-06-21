@@ -217,6 +217,14 @@ async function validateVerify() {
       showAlert("verifyAlert", t("verify_err_duplicate"));
       return false;
     }
+    if (!data.ok && data.reason === "format") {
+      showAlert("verifyAlert", t("verify_err_format"));
+      return false;
+    }
+    if (!data.ok && data.reason === "email") {
+      showAlert("verifyAlert", t("verify_err_email"));
+      return false;
+    }
     if (data.ok && data.matched) return true;
     showAlert("verifyAlert", t("verify_err_nomatch"));
     return false;

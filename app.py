@@ -7,6 +7,7 @@ student feedback flow and a private, single-admin analytics dashboard.
 import csv
 import io
 import json
+import re
 from functools import wraps
 
 from flask import (
@@ -66,7 +67,16 @@ def student_flow():
 # ---------------------------------------------------------------------------
 @app.route("/api/verify", methods=["POST"])
 def api_verify():
-    """Verify Student ID + Email against roster, and check for duplicates."""
+    """Verify a student before they may submit feedback.
+
+    Strategy:
+      1. Registration Number must match the IIUI format (config.REGISTRATION_PATTERN).
+      2. Email must be a valid address.
+      3. The student must not have already submitted (duplicate guard).
+      4. If a roster has been uploaded and contains this Registration Number,
+         the email must also match that record (extra protection). When no
+         roster is loaded, the format check alone is sufficient.
+    """
     data = request.get_json(force=True)
     student_id = (data.get("student_id") or "").strip()
     email = (data.get("email") or "").strip()
@@ -74,19 +84,32 @@ def api_verify():
     if not student_id or not email:
         return jsonify({"ok": False, "reason": "missing"}), 400
 
+    if not re.match(config.REGISTRATION_PATTERN, student_id):
+        return jsonify({"ok": False, "reason": "format"})
+
+    if not re.match(config.EMAIL_PATTERN, email):
+        return jsonify({"ok": False, "reason": "email"})
+
     if database.submission_exists(student_id, data.get("room_number")):
         return jsonify({"ok": False, "reason": "duplicate"})
 
     resident = database.find_resident(student_id, email)
     if resident:
+        # Roster present and matched — return the known details.
         return jsonify({"ok": True, "matched": True, "resident": {
             "full_name": resident.get("full_name"),
             "room_number": resident.get("room_number"),
             "block": resident.get("block"),
             "academic_level": resident.get("academic_level"),
         }})
-    # No match still allowed to continue (but flagged)
-    return jsonify({"ok": True, "matched": False})
+
+    # If the roster has entries for this exact Registration Number but the
+    # email did not match, block it. (find_resident returns None on mismatch.)
+    if database.resident_exists(student_id):
+        return jsonify({"ok": False, "reason": "nomatch"})
+
+    # No roster entry for this student — accept based on format.
+    return jsonify({"ok": True, "matched": True})
 
 
 @app.route("/api/submit", methods=["POST"])
