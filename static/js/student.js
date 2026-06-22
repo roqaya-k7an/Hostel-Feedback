@@ -343,3 +343,36 @@ function onLangChange() {
 
 // init
 document.addEventListener("DOMContentLoaded", () => { showStep(); onLangChange(); });
+
+// Auto-fill resident data when registration number is entered
+document.getElementById('student_id')?.addEventListener('blur', async function() {
+  const regNum = this.value.trim();
+  if (!regNum) return;
+  
+  try {
+    const res = await fetch('/api/lookup-resident', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: regNum })
+    });
+    const data = await res.json();
+    
+    if (data.ok && data.resident) {
+      // Show auto-fill fields
+      document.getElementById('autoFillFields').style.display = 'block';
+      // Populate fields
+      document.getElementById('full_name').value = data.resident.full_name || '';
+      document.getElementById('room_number').value = data.resident.room_number || '';
+      document.getElementById('block').value = data.resident.block || '';
+      document.getElementById('academic_level').value = data.resident.academic_level || '';
+      document.getElementById('verifyAlert').classList.remove('show');
+    } else {
+      document.getElementById('autoFillFields').style.display = 'none';
+      const alertEl = document.getElementById('verifyAlert');
+      alertEl.textContent = 'Registration number not found in our system. Only registered students can provide feedback.';
+      alertEl.classList.add('show');
+    }
+  } catch (e) {
+    console.error('Lookup failed:', e);
+  }
+});

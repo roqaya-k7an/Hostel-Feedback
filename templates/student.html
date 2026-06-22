@@ -43,15 +43,16 @@
   </section>
 
   <!-- STEP 2: Verification -->
+  </section>
   <section class="step" data-step="verify">
     <div class="card">
       <h2 data-i18n="verify_title">Verify your identity</h2>
-      <p class="step__lead" data-i18n="verify_lead">Your Registration Number and Email must match our records.</p>
+      <p class="step__lead" data-i18n="verify_lead">Enter your Registration Number and University Email to auto-fill your details.</p>
       <div class="alert-box alert-box--err" id="verifyAlert"></div>
 
       <div class="field" data-required>
         <label data-i18n="f_student_id">Registration Number</label>
-        <input type="text" id="student_id" data-i18n-ph="f_student_id_ph">
+        <input type="text" id="student_id" data-i18n-ph="f_student_id_ph" placeholder="e.g. 002136/MSDS/S24">
         <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
       </div>
       <div class="field" data-required>
@@ -59,31 +60,24 @@
         <input type="email" id="email" data-i18n-ph="f_email_ph">
         <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
       </div>
-      <div class="field" data-required>
-        <label data-i18n="f_full_name">Full Name</label>
-        <input type="text" id="full_name">
-        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
-      </div>
-      <div class="field" data-required id="roomField">
-        <label data-i18n="f_room">Room Number</label>
-        <input type="text" id="room_number" data-i18n-ph="f_room_ph">
-        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
-      </div>
-      <div class="field" data-required id="blockField">
-        <label data-i18n="f_block">Block</label>
-        <select id="block">
-          <option value="" data-i18n="f_block_ph">Select block</option>
-          {% for b in blocks %}<option value="{{ b }}">{{ b }}</option>{% endfor %}
-        </select>
-        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
-      </div>
-      <div class="field" data-required id="levelField">
-        <label data-i18n="f_level">Academic Level</label>
-        <select id="academic_level">
-          <option value="" data-i18n="f_level_ph">Select level</option>
-          {% for l in levels %}<option value="{{ l }}">{{ l }}</option>{% endfor %}
-        </select>
-        <div class="field-error" data-i18n="verify_err_required">This field is required.</div>
+
+      <div id="autoFillFields" style="display:none;">
+        <div class="field">
+          <label data-i18n="f_full_name">Full Name</label>
+          <input type="text" id="full_name" readonly style="background-color:#f5f5f5;cursor:not-allowed;">
+        </div>
+        <div class="field">
+          <label data-i18n="f_room">Room Number</label>
+          <input type="text" id="room_number" readonly style="background-color:#f5f5f5;cursor:not-allowed;">
+        </div>
+        <div class="field">
+          <label data-i18n="f_block">Block</label>
+          <input type="text" id="block" readonly style="background-color:#f5f5f5;cursor:not-allowed;">
+        </div>
+        <div class="field">
+          <label data-i18n="f_level">Academic Level</label>
+          <input type="text" id="academic_level" readonly style="background-color:#f5f5f5;cursor:not-allowed;">
+        </div>
       </div>
     </div>
   </section>
