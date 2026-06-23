@@ -344,10 +344,15 @@ function onLangChange() {
 // init
 document.addEventListener("DOMContentLoaded", () => { showStep(); onLangChange(); });
 
-// Auto-fill resident data when registration number is entered
-document.getElementById('student_id')?.addEventListener('blur', async function() {
-  const regNum = this.value.trim();
-  if (!regNum) return;
+// Handle Verify button click
+document.getElementById('verifyBtn')?.addEventListener('click', async function() {
+  const regNum = document.getElementById('student_id').value.trim();
+  const email = document.getElementById('email').value.trim();
+  
+  if (!regNum || !email) {
+    alert('Please enter both Registration Number and Email');
+    return;
+  }
   
   try {
     const res = await fetch('/api/lookup-resident', {
@@ -373,6 +378,7 @@ document.getElementById('student_id')?.addEventListener('blur', async function()
       alertEl.classList.add('show');
     }
   } catch (e) {
-    console.error('Lookup failed:', e);
+    console.error('Verification failed:', e);
+    alert('Verification failed. Please try again.');
   }
 });
