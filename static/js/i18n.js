@@ -94,6 +94,7 @@ const I18N = {
     vip_b_clean: "Higher Cleanliness",
     vip_b_safety: "Improved Safety",
     vip_b_premium: "Premium Facilities",
+    vip_b_washing: "Washing Machine Area",
     vip_q_interested: "Are you interested in VIP housing?",
     vip_yes: "Yes, I'm interested",
     vip_no: "No, not interested",
