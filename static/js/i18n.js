@@ -34,11 +34,11 @@ const I18N = {
     role_admin_desc: "Access the private analytics dashboard.",
 
     // Residency
-    res_title: "Are you currently residing in a campus hostel?",
+    res_title: "Where do you live?",
     res_lead: "This helps us route you to the right set of questions.",
-    res_yes: "Yes, I'm a hostel resident",
+    res_yes: "Hostel",
     res_yes_desc: "I currently live in a university hostel.",
-    res_no: "No, I don't stay in a hostel",
+    res_no: "Day Scholar",
     res_no_desc: "I'd still like to share my interest in premium housing.",
 
     // Verification
@@ -214,11 +214,11 @@ const I18N = {
     role_admin: "دخول المسؤول",
     role_admin_desc: "الوصول إلى لوحة التحليلات الخاصة.",
 
-    res_title: "هل تقيم حالياً في سكن الجامعة؟",
+    res_title: "أين تسكن؟",
     res_lead: "هذا يساعدنا في توجيهك إلى الأسئلة المناسبة.",
-    res_yes: "نعم، أنا مقيم في السكن",
+    res_yes: "في السكن الجامعي",
     res_yes_desc: "أسكن حالياً في سكن جامعي.",
-    res_no: "لا، لا أقيم في السكن",
+    res_no: "خارج الحرم",
     res_no_desc: "أرغب في مشاركة اهتمامي بالسكن المميز.",
 
     verify_title: "تحقق من هويتك",
