@@ -137,6 +137,58 @@ document.querySelectorAll(".feedback-field").forEach((field) => {
   });
 });
 
+
+// ---- AC Questions (after VIP interest) -----------------------------------
+document.querySelectorAll("[data-vip]").forEach((c) => {
+  c.addEventListener("click", () => {
+    if (c.dataset.vip === "yes") {
+      document.getElementById("vipAcPrice").style.display = "block";
+    } else {
+      document.getElementById("vipAcPrice").style.display = "none";
+      document.getElementById("vipAcInterest").style.display = "none";
+    }
+  });
+});
+
+// AC Price buttons
+document.querySelectorAll(".ac-price").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    state.vip_ac_price = btn.dataset.price;
+    document.getElementById("vipAcInterest").style.display = "block";
+    document.querySelectorAll(".ac-price").forEach((b) => b.style.opacity = b === btn ? "1" : "0.5");
+  });
+});
+
+// AC Interest buttons
+document.querySelectorAll(".ac-interest").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    state.vip_ac_interest = btn.dataset.interest;
+    document.querySelectorAll(".ac-interest").forEach((b) => b.style.opacity = b === btn ? "1" : "0.5");
+  });
+});
+
+// ---- AC Questions ---
+document.querySelectorAll("[data-vip]").forEach(c => {
+  c.addEventListener("click", () => {
+    if (c.dataset.vip === "yes") {
+      document.getElementById("vipAcPrice").style.display = "block";
+    } else {
+      document.getElementById("vipAcPrice").style.display = "none";
+      document.getElementById("vipAcInterest").style.display = "none";
+    }
+  });
+});
+document.querySelectorAll(".ac-price").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.getElementById("vipAcInterest").style.display = "block";
+  });
+});
+document.querySelectorAll(".ac-interest").forEach(btn => {
+  btn.addEventListener("click", () => {
+    state.vip_ac_interest = btn.dataset.interest;
+  });
+});
+
 // ---- VIP interest ---------------------------------------------------------
 document.querySelectorAll("[data-vip]").forEach((c) => {
   c.addEventListener("click", () => {
@@ -381,4 +433,19 @@ document.getElementById('verifyBtn')?.addEventListener('click', async function()
     console.error('Verification failed:', e);
     alert('Verification failed. Please try again.');
   }
+});
+
+
+// AC interest auto-show
+document.querySelectorAll("[data-vip]").forEach(function (c) {
+  c.addEventListener("click", function () {
+    var el = document.getElementById("vipAcInterest");
+    if (el) el.style.display = c.dataset.vip === "yes" ? "block" : "none";
+  });
+});
+document.querySelectorAll(".ac-interest").forEach(function (b) {
+  b.addEventListener("click", function () {
+    document.querySelectorAll(".ac-interest").forEach(function (x) { x.classList.remove("active"); });
+    b.classList.add("active");
+  });
 });
