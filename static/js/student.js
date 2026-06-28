@@ -61,6 +61,7 @@ document.querySelectorAll("[data-residency]").forEach((c) => {
     document.querySelectorAll("[data-residency]").forEach((x) => x.classList.remove("selected"));
     c.classList.add("selected");
     state.residency = c.dataset.residency;
+    setTimeout(function () { idx++; showStep(); }, 200);
   });
 });
 
