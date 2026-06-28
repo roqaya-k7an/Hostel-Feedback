@@ -625,3 +625,7 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 .hero--bgphoto > .container,
 .hero--bgphoto > .hero__body { position: relative; z-index: 2; }
 .hero__grid--single { grid-template-columns: 1fr; max-width: 720px; }
+
+
+/* hide-next-on-residency */
+.flow:has(.step[data-step="residency"].active) #btnNext { display: none !important; }
