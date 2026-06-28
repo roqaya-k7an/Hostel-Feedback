@@ -581,6 +581,6 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 .hero--photo {
   background:
     linear-gradient(160deg, rgba(16,35,61,.86), rgba(31,58,95,.66)),
-    url('/static/img/dorm3.jpg') center center / cover no-repeat;
+    url('/static/img/dorm1.jpg') center center / cover no-repeat;
 }
 .hero__grid--single { grid-template-columns: 1fr; max-width: 720px; }
