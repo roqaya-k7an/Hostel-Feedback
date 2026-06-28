@@ -580,7 +580,7 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 /* Cover full-background photo */
 .hero--photo {
   background:
-    linear-gradient(90deg, rgba(16,35,61,.92) 0%, rgba(16,35,61,.72) 38%, rgba(16,35,61,.30) 72%, rgba(16,35,61,.08) 100%),
-    url('/static/img/dorm1.jpg') center center / cover no-repeat;
+    linear-gradient(90deg, rgba(16,35,61,.90) 0%, rgba(16,35,61,.62) 42%, rgba(16,35,61,.18) 78%, rgba(16,35,61,.04) 100%),
+    url('/static/img/dorm1.jpg') center center / cover no-repeat !important;
 }
 .hero__grid--single { grid-template-columns: 1fr; max-width: 720px; }
