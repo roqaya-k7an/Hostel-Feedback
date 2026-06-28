@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block body %}
-<div class="hero">
+<div class="hero hero--photo">
   <div class="container">
     <nav class="hero__nav">
       <div class="brand">
@@ -16,7 +16,7 @@
 
   <div class="hero__body">
     <div class="container">
-      <div class="hero__grid">
+      <div class="hero__grid hero__grid--single">
         <div>
           <span class="hero__eyebrow" data-i18n="cover_eyebrow">Smart Housing Feedback &amp; Quality Control</span>
           <h1>
@@ -32,10 +32,6 @@
             <span>&#9989; <em data-i18n="cover_note_2">One response per student</em></span>
             <span>&#9201;&#65039; <em data-i18n="cover_note_3">Takes ~3 minutes</em></span>
           </div>
-        </div>
-
-        <div class="hero__art hero__art--photo">
-          <img src="{{ url_for('static', filename='img/dorm3.jpg') }}" alt="IIUI Hostel" class="hero__photo">
         </div>
       </div>
     </div>

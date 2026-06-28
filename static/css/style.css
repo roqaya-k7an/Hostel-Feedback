@@ -575,3 +575,12 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
   filter:contrast(1.06) saturate(1.1) brightness(1.03); box-shadow:0 12px 30px rgba(0,0,0,.28); }
 .cover-collage__inset { display:none !important; }
 @media (max-width:880px){ .hero__photo{ height:300px; } }
+
+
+/* Cover full-background photo */
+.hero--photo {
+  background:
+    linear-gradient(160deg, rgba(16,35,61,.86), rgba(31,58,95,.66)),
+    url('/static/img/dorm3.jpg') center center / cover no-repeat;
+}
+.hero__grid--single { grid-template-columns: 1fr; max-width: 720px; }
