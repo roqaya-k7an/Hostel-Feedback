@@ -25,6 +25,14 @@ app.secret_key = config.SECRET_KEY
 
 NUM = len(config.CATEGORIES)
 
+@app.after_request
+def _no_cache(resp):
+    resp.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = "0"
+    return resp
+
+
 
 # ---------------------------------------------------------------------------
 # Setup
