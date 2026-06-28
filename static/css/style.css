@@ -584,3 +584,13 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
     url('/static/img/dorm1.jpg') center center / cover no-repeat !important;
 }
 .hero__grid--single { grid-template-columns: 1fr; max-width: 720px; }
+
+
+/* FINAL: plain uploaded image in glassy card, no effects */
+.hero__art--photo { padding: 16px !important; }
+.hero__photo {
+  display: block !important; width: 100% !important; height: 440px !important;
+  object-fit: cover !important; border-radius: 14px !important;
+  filter: none !important; box-shadow: none !important;
+}
+@media (max-width: 880px) { .hero__photo { height: 280px !important; } }
