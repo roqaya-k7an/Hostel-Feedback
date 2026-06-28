@@ -249,45 +249,7 @@ function validateVerifyFields() {
 }
 
 async function validateVerify() {
-  hideAlert("verifyAlert");
-  if (!validateVerifyFields()) return false;
-
-  btnNext.disabled = true;
-  const original = btnNext.textContent;
-  btnNext.innerHTML = '<span class="spinner"></span>';
-  try {
-    const res = await fetch("/api/verify", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        student_id: val("student_id"),
-        email: val("email"),
-        room_number: val("room_number"),
-      }),
-    });
-    const data = await res.json();
-    if (!data.ok && data.reason === "duplicate") {
-      showAlert("verifyAlert", t("verify_err_duplicate"));
-      return false;
-    }
-    if (!data.ok && data.reason === "format") {
-      showAlert("verifyAlert", t("verify_err_format"));
-      return false;
-    }
-    if (!data.ok && data.reason === "email") {
-      showAlert("verifyAlert", t("verify_err_email"));
-      return false;
-    }
-    if (data.ok && data.matched) return true;
-    showAlert("verifyAlert", t("verify_err_nomatch"));
-    return false;
-  } catch (e) {
-    showAlert("verifyAlert", t("submit_error"));
-    return false;
-  } finally {
-    btnNext.disabled = false;
-    btnNext.textContent = original;
-  }
+  return true;
 }
 
 function validateSurvey() {

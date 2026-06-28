@@ -154,10 +154,6 @@ def api_submit():
     data = request.get_json(force=True)
     student_id = (data.get("student_id") or "").strip()
 
-    # Duplicate guard at submit time too
-    if student_id and database.submission_exists(student_id, data.get("room_number")):
-        return jsonify({"ok": False, "reason": "duplicate"}), 409
-
     row = {
         "student_id": student_id,
         "full_name": (data.get("full_name") or "").strip(),

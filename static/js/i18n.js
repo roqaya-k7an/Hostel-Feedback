@@ -42,7 +42,7 @@ const I18N = {
     res_no_desc: "I'd still like to share my interest in premium housing.",
 
     // Verification
-    verify_title: "Verify your identity",
+    verify_title: "Your Information",
     verify_lead: "Enter your IIUI Registration Number (e.g. 002136/MSDS/S24) and University Email. All fields are required.",
     f_student_id: "Registration Number",
     f_student_id_ph: "e.g. 002136/MSDS/S24",
@@ -229,7 +229,7 @@ const I18N = {
     res_no: "خارج الحرم",
     res_no_desc: "أرغب في مشاركة اهتمامي بالسكن المميز.",
 
-    verify_title: "تحقق من هويتك",
+    verify_title: "معلوماتك",
     verify_lead: "أدخل رقم التسجيل (مثال: 002136/MSDS/S24) والبريد الجامعي. جميع الحقول مطلوبة.",
     f_student_id: "رقم التسجيل",
     f_student_id_ph: "مثال: 002136/MSDS/S24",

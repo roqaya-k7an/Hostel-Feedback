@@ -42,7 +42,37 @@
     </div>
   </section>
 
-  <!-- STEP 2: Verification -->
+  <!-- STEP 2: Information -->
+  <section class="step" data-step="verify">
+    <div class="card">
+      <h2 data-i18n="verify_title">Your Information</h2>
+      <p class="step__lead" data-i18n="verify_lead">Please enter your details below.</p>
+
+      <div class="field">
+        <label data-i18n="f_full_name">Full Name</label>
+        <input type="text" id="full_name">
+      </div>
+      <div class="field">
+        <label data-i18n="f_student_id">Registration Number</label>
+        <input type="text" id="student_id" data-i18n-ph="f_student_id_ph">
+      </div>
+      <div class="field">
+        <label data-i18n="f_email">University Email</label>
+        <input type="email" id="email" data-i18n-ph="f_email_ph">
+      </div>
+      <div class="field">
+        <label data-i18n="f_block">Block</label>
+        <input type="text" id="block">
+      </div>
+      <div class="field">
+        <label data-i18n="f_room">Room Number</label>
+        <input type="text" id="room_number" data-i18n-ph="f_room_ph">
+      </div>
+      <div class="field">
+        <label data-i18n="f_level">Academic Level</label>
+        <input type="text" id="academic_level">
+      </div>
+    </div>
   </section>
   <section class="step" data-step="verify">
     <div class="card">
@@ -260,5 +290,5 @@
 </script>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/student.js') }}?v=25"></script>
+<script src="{{ url_for('static', filename='js/student.js') }}?v=26"></script>
 {% endblock %}
