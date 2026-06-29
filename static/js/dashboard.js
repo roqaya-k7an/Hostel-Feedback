@@ -298,30 +298,6 @@ document.querySelectorAll("[data-export]").forEach((btn) => {
   });
 });
 
-// ---- Import roster --------------------------------------------------------
-document.getElementById("rosterFile").addEventListener("change", async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const fd = new FormData();
-  fd.append("file", file);
-  const alertEl = document.getElementById("importAlert");
-  try {
-    const res = await fetch("/api/admin/import", { method: "POST", body: fd });
-    const data = await res.json();
-    if (data.ok) {
-      alertEl.className = "alert-box alert-box--info show";
-      alertEl.textContent = `${t("import_success")} ${data.count}`;
-      document.getElementById("residentCount").textContent = data.count;
-    } else {
-      alertEl.className = "alert-box alert-box--err show";
-      alertEl.textContent = `${t("import_error")} ${data.error || ""}`;
-    }
-  } catch (err) {
-    alertEl.className = "alert-box alert-box--err show";
-    alertEl.textContent = t("import_error");
-  }
-  e.target.value = "";
-});
 
 // ---- Re-render on language change -----------------------------------------
 function onLangChange() { if (lastData) render(lastData); }

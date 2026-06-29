@@ -120,35 +120,6 @@ def api_verify():
     # No roster entry for this student — reject (only registered students can provide feedback).
     return jsonify({"ok": False, "reason": "not_in_roster"})
 
-@app.route("/api/lookup-resident", methods=["POST"])
-def api_lookup_resident():
-    """Look up resident data by registration number (for auto-fill)."""
-    data = request.get_json(force=True)
-    student_id = (data.get("student_id") or "").strip()
-    
-    if not student_id:
-        return jsonify({"ok": False, "reason": "missing"}), 400
-    
-    # Query the residents table
-    with database.get_db() as conn:
-        row = conn.execute(
-            "SELECT * FROM residents WHERE LOWER(TRIM(student_id)) = LOWER(TRIM(?))",
-            (student_id,)
-        ).fetchone()
-    
-    if row:
-        resident = dict(row)
-        return jsonify({"ok": True, "resident": {
-            "full_name": resident.get("full_name"),
-            "room_number": resident.get("room_number"),
-            "block": resident.get("block"),
-            "academic_level": resident.get("academic_level"),
-        }})
-    
-    return jsonify({"ok": False, "reason": "not_found"})
-
-
-
 @app.route("/api/submit", methods=["POST"])
 def api_submit():
     data = request.get_json(force=True)

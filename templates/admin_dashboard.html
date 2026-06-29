@@ -27,20 +27,11 @@
         <p data-i18n="dash_sub">Live quality-control metrics from real submissions.</p>
       </div>
       <div class="toolbar">
-        <span style="font-size:.85rem;color:var(--muted);">
-          <b id="residentCount">{{ resident_count }}</b> <span data-i18n="dash_residents">residents loaded</span>
-        </span>
-        <label class="btn btn--teal" style="position:relative;overflow:hidden;">
-          <span data-i18n="dash_import">Import Roster</span>
-          <input type="file" id="rosterFile" accept=".csv" style="position:absolute;inset:0;opacity:0;cursor:pointer;">
-        </label>
         <button class="btn btn--ghost" data-export="csv" data-i18n="export_csv">Export CSV</button>
         <button class="btn btn--ghost" data-export="excel" data-i18n="export_excel">Export Excel</button>
         <button class="btn btn--gold" data-export="pdf" data-i18n="export_pdf">Export PDF</button>
       </div>
     </div>
-
-    <div class="alert-box alert-box--info" id="importAlert"></div>
 
     <!-- Filters -->
     <div class="filters">
@@ -160,5 +151,5 @@
 </div>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=28"></script>
 {% endblock %}
