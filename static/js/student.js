@@ -249,7 +249,16 @@ function validateVerifyFields() {
 }
 
 async function validateVerify() {
-  return true;
+  const required = ["full_name", "student_id", "block", "room_number", "academic_level"];
+  let ok = true;
+  required.forEach(function (id) {
+    const el = document.getElementById(id);
+    const field = el ? el.closest(".field") : null;
+    if (el && !el.value.trim()) { if (field) field.classList.add("invalid"); ok = false; }
+    else if (field) field.classList.remove("invalid");
+  });
+  if (ok) hideAlert("verifyAlert"); else showAlert("verifyAlert", t("verify_fill_all"));
+  return ok;
 }
 
 function validateSurvey() {
@@ -282,7 +291,7 @@ async function submitAll() {
     is_resident: state.residency === "yes",
     student_id: state.residency === "yes" ? val("student_id") : val("vip_email"),
     full_name: state.residency === "yes" ? val("full_name") : "",
-    email: state.residency === "yes" ? val("email") : val("vip_email"),
+    email: state.residency === "yes" ? byId("email") : val("vip_email"),
     room_number: state.residency === "yes" ? val("room_number") : "",
     block: state.residency === "yes" ? val("block") : "",
     academic_level: state.residency === "yes" ? val("academic_level") : "",
