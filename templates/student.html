@@ -179,9 +179,10 @@
         <div class="field">
           <label data-i18n="vip_pay_q">Would you pay 15,000–20,000 PKR?</label>
           <div class="say-toggle" id="vipPay">
-            <button type="button" data-pay="Yes" data-i18n="vip_pay_yes">Yes</button>
-            <button type="button" data-pay="Maybe" data-i18n="vip_pay_maybe">Maybe</button>
-            <button type="button" data-pay="No" data-i18n="vip_pay_no">No</button>
+            <button type="button" data-pay="15,000 PKR" data-i18n="vip_pay_15k">15,000 PKR</button>
+            <button type="button" data-pay="20,000 PKR" data-i18n="vip_pay_20k">20,000 PKR</button>
+            <button type="button" data-pay="25,000 PKR" data-i18n="vip_pay_25k">25,000 PKR</button>
+            <button type="button" data-pay="More than 25,000 PKR" data-i18n="vip_pay_25k_plus">More than 25,000 PKR</button>
           </div>
         </div>
 
@@ -263,5 +264,5 @@
 </script>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/student.js') }}?v=27"></script>
+<script src="{{ url_for('static', filename='js/student.js') }}?v=28"></script>
 {% endblock %}

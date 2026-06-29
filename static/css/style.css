@@ -629,3 +629,5 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 
 /* hide-next-on-residency */
 .flow:has(.step[data-step="residency"].active) #btnNext { display: none !important; }
+
+#vipPay { flex-wrap: wrap; }
