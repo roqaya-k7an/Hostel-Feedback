@@ -17,10 +17,8 @@ function getFilters() {
   const block = document.getElementById("f_block").value;
   const level = document.getElementById("f_level").value;
   const sat = document.getElementById("f_sat").value;
-  const vip = document.getElementById("f_vip").value;
   if (block) params.set("block", block);
   if (level) params.set("academic_level", level);
-  if (vip) params.set("vip_interested", vip);
   if (sat) {
     const [lo, hi] = sat.split("-");
     params.set("sat_min", lo);
@@ -48,7 +46,6 @@ function render(data) {
   // KPIs
   document.getElementById("kpiTotal").textContent = data.kpis.total_responses;
   document.getElementById("kpiSat").textContent = data.kpis.avg_satisfaction ?? "—";
-  document.getElementById("kpiVip").textContent = data.kpis.vip_interest_pct + "%";
   document.getElementById("kpiComplaints").textContent = data.kpis.complaint_count;
 
   renderCategoryChart(data);
@@ -58,7 +55,6 @@ function render(data) {
   renderHealth(data);
   renderBlocks(data);
   renderAcademic(data);
-  renderVip(data);
 }
 
 function destroy(name) { if (charts[name]) { charts[name].destroy(); delete charts[name]; } }
@@ -221,36 +217,6 @@ function renderAcademic(data) {
   document.getElementById("academicTable").innerHTML = html;
 }
 
-function renderVip(data) {
-  const v = data.vip;
-  let html = `<div style="display:flex;gap:12px;margin-bottom:16px;">
-    <div style="flex:1;text-align:center;padding:12px;background:rgba(39,174,96,.1);border-radius:10px;">
-      <div style="font-family:var(--serif);font-size:1.6rem;color:var(--success)">${v.interested}</div>
-      <div style="font-size:.78rem;color:var(--muted)">${t("vip_interested_count")}</div>
-    </div>
-    <div style="flex:1;text-align:center;padding:12px;background:rgba(231,76,60,.08);border-radius:10px;">
-      <div style="font-family:var(--serif);font-size:1.6rem;color:var(--critical)">${v.not_interested}</div>
-      <div style="font-size:.78rem;color:var(--muted)">${t("vip_not_count")}</div>
-    </div>
-  </div>`;
-
-  html += subList(t("vip_feature_demand"), v.features);
-  html += subList(t("vip_price_accept"), v.price_acceptance);
-  html += subList(t("vip_rejections"), v.rejections);
-  document.getElementById("vipPanel").innerHTML = html;
-}
-
-function subList(title, obj) {
-  const entries = Object.entries(obj || {});
-  if (!entries.length) return "";
-  const max = Math.max(...entries.map((e) => e[1]));
-  let rows = entries.map(([k, val]) =>
-    `<div style="margin-bottom:7px;">
-      <div style="display:flex;justify-content:space-between;font-size:.82rem;"><span>${k}</span><b>${val}</b></div>
-      <div class="health__bar"><i style="width:${(val / max) * 100}%;background:var(--teal)"></i></div>
-    </div>`).join("");
-  return `<div style="margin-top:14px;"><div style="font-weight:600;font-size:.85rem;margin-bottom:8px;">${title}</div>${rows}</div>`;
-}
 
 // ---- Block detail modal ---------------------------------------------------
 async function openBlockDetail(block) {
@@ -282,10 +248,10 @@ document.getElementById("blockModal").addEventListener("click", (e) => {
 });
 
 // ---- Filters --------------------------------------------------------------
-["f_block", "f_level", "f_sat", "f_vip"].forEach((id) =>
+["f_block", "f_level", "f_sat"].forEach((id) =>
   document.getElementById(id).addEventListener("change", loadDashboard));
 document.getElementById("resetFilters").addEventListener("click", () => {
-  ["f_block", "f_level", "f_sat", "f_vip"].forEach((id) => { document.getElementById(id).value = ""; });
+  ["f_block", "f_level", "f_sat"].forEach((id) => { document.getElementById(id).value = ""; });
   loadDashboard();
 });
 

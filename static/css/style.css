@@ -328,22 +328,6 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 }
 .say-toggle button.active { background: var(--teal); border-color: var(--teal); color: #fff; }
 
-/* VIP feature chips */
-.chip-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-.chip {
-  border: 1.5px solid var(--line); background: var(--surface); border-radius: 999px; padding: 9px 18px;
-  cursor: pointer; font-weight: 600; font-size: .88rem; transition: all .15s ease;
-}
-.chip.selected { background: var(--gold); border-color: var(--gold); color: #3a2a07; }
-
-.vip-banner {
-  background: linear-gradient(135deg, var(--navy), var(--teal)); color: #fff;
-  border-radius: var(--radius); padding: 22px; margin-bottom: 22px;
-}
-.vip-banner h3 { color: #fff; margin-bottom: 8px; }
-.vip-banner ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 12px; }
-.vip-banner li { font-size: .9rem; display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,.9); }
-
 .step__actions { display: flex; justify-content: space-between; gap: 12px; margin-top: 26px; }
 
 /* Confirmation */
@@ -629,5 +613,3 @@ html[dir="rtl"] .page-back:hover { transform: translateX(3px); }
 
 /* hide-next-on-residency */
 .flow:has(.step[data-step="residency"].active) #btnNext { display: none !important; }
-
-#vipPay { flex-wrap: wrap; }

@@ -36,7 +36,7 @@
         <div class="choice" data-residency="no">
           <span class="choice__emoji">🚶</span>
           <b data-i18n="res_no">Day Scholar</b>
-          <small data-i18n="res_no_desc">I'd still like to share interest in premium housing.</small>
+          <small data-i18n="res_no_desc">I don't live in a university hostel.</small>
         </div>
       </div>
     </div>
@@ -149,100 +149,7 @@
     </div>
   </section>
 
-  <!-- STEP 5: VIP -->
-  <section class="step" data-step="vip">
-    <div class="card">
-      <h2 data-i18n="vip_title">Premium (VIP) Housing</h2>
-      <div class="vip-banner">
-        <h3 data-i18n="vip_intro_title">A premium housing tier — would you want it?</h3>
-        <p data-i18n="vip_intro_lead">We're gauging interest in an upgraded option with:</p>
-        <ul>
-          <li>🔒 <span data-i18n="vip_b_privacy">Privacy</span></li>
-          <li>❄️ <span data-i18n="vip_b_ac">Air Conditioning</span></li>
-          <li>✨ <span data-i18n="vip_b_clean">Higher Cleanliness</span></li>
-          <li>🛡️ <span data-i18n="vip_b_safety">Improved Safety</span></li>
-          <li>⭐ <span data-i18n="vip_b_premium">Premium Facilities</span></li>
-          <li>🧺 <span data-i18n="vip_b_washing">Washing Machine Area</span></li>
-        </ul>
-      </div>
-
-      <div class="field">
-        <label data-i18n="vip_q_interested">Are you interested in VIP housing?</label>
-        <div class="choice-grid">
-          <div class="choice" data-vip="yes"><span class="choice__emoji">👍</span><b data-i18n="vip_yes">Yes, I'm interested</b></div>
-          <div class="choice" data-vip="no"><span class="choice__emoji">👎</span><b data-i18n="vip_no">No, not interested</b></div>
-        </div>
-      </div>
-
-      <!-- VIP YES branch -->
-      <div id="vipYes" style="display:none;">
-        <div class="field">
-          <label data-i18n="vip_pay_q">Would you pay 15,000–20,000 PKR?</label>
-          <div class="say-toggle" id="vipPay">
-            <button type="button" data-pay="15,000 PKR" data-i18n="vip_pay_15k">15,000 PKR</button>
-            <button type="button" data-pay="20,000 PKR" data-i18n="vip_pay_20k">20,000 PKR</button>
-            <button type="button" data-pay="25,000 PKR" data-i18n="vip_pay_25k">25,000 PKR</button>
-            <button type="button" data-pay="More than 25,000 PKR" data-i18n="vip_pay_25k_plus">More than 25,000 PKR</button>
-          </div>
-        </div>
-
-        <div id="vipAcInterest" style="display:none; margin-top:2rem;">
-          <div class="field">
-            <label data-i18n="vip_ac_interest_q">Would you be interested in upgrading to an air-conditioned room? (Additional cost will apply)</label>
-            <div style="display:grid; gap:1rem; margin-top:1rem;">
-              <button type="button" class="ac-interest" data-i18n="vip_ac_yes_full">Yes, with AC</button>
-              <button type="button" class="ac-interest" data-i18n="vip_ac_other">Other facilities only (without AC)</button>
-              <button type="button" class="ac-interest" data-i18n="vip_ac_no_interested">Not interested in premium housing</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label data-i18n="vip_features_q">Which features matter most?</label>
-          <div class="chip-grid" id="vipFeatures">
-            <div class="chip" data-feature="Privacy" data-i18n="vip_b_privacy">Privacy</div>
-            <div class="chip" data-feature="AC" data-i18n="vip_b_ac">AC</div>
-            <div class="chip" data-feature="Cleanliness" data-i18n="vip_b_clean">Cleanliness</div>
-            <div class="chip" data-feature="Safety" data-i18n="vip_b_safety">Safety</div>
-          </div>
-        </div>
-        <div class="field">
-          <label data-i18n="vip_reason_q">Why would you switch?</label>
-          <textarea id="vip_reason" data-i18n-ph="fb_ph"></textarea>
-        </div>
-        <div class="field">
-          <label data-i18n="vip_improve_q">What improvements do you expect?</label>
-          <textarea id="vip_expected_improvements" data-i18n-ph="fb_ph"></textarea>
-        </div>
-        <div class="field">
-          <label data-i18n="vip_barriers_q">Any concerns or barriers?</label>
-          <textarea id="vip_barriers_yes" data-i18n-ph="fb_ph"></textarea>
-        </div>
-        <div class="field">
-          <label data-i18n="vip_contact_q">Contact details</label>
-          <input type="text" id="vip_phone" data-i18n-ph="vip_phone" style="margin-bottom:10px;">
-          <input type="email" id="vip_email" data-i18n-ph="vip_email">
-        </div>
-      </div>
-
-              
-
-      <!-- VIP NO branch -->
-      <div id="vipNo" style="display:none;">
-        <div class="field">
-          <label data-i18n="vip_no_barriers_q">What's holding you back?</label>
-          <div class="chip-grid" id="vipBarriers">
-            <div class="chip" data-barrier="Price" data-i18n="vip_bar_price">Price</div>
-            <div class="chip" data-barrier="Location" data-i18n="vip_bar_location">Location</div>
-            <div class="chip" data-barrier="Satisfied with current housing" data-i18n="vip_bar_satisfied">Satisfied</div>
-            <div class="chip" data-barrier="Other" data-i18n="vip_bar_other">Other</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STEP 6: Confirmation -->
+  <!-- STEP 5: Confirmation -->
   <section class="step" data-step="confirm">
     <div class="card confirm">
       <div class="confirm__check">✓</div>
@@ -264,5 +171,5 @@
 </script>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/student.js') }}?v=28"></script>
+<script src="{{ url_for('static', filename='js/student.js') }}?v=29"></script>
 {% endblock %}

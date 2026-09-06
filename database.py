@@ -63,14 +63,6 @@ def init_db():
                 main_issues               TEXT,
                 suggestions               TEXT,
                 additional_comments       TEXT,
-                vip_interested            TEXT,
-                vip_willing_to_pay        TEXT,
-                vip_features              TEXT,
-                vip_reason                TEXT,
-                vip_expected_improvements TEXT,
-                vip_barriers              TEXT,
-                vip_phone                 TEXT,
-                vip_email                 TEXT,
                 created_at     TEXT DEFAULT (datetime('now'))
             )
             """
@@ -169,9 +161,6 @@ def get_submissions(filters=None):
     if filters.get("academic_level"):
         clauses.append("academic_level = ?")
         params.append(filters["academic_level"])
-    if filters.get("vip_interested"):
-        clauses.append("LOWER(vip_interested) = ?")
-        params.append(filters["vip_interested"].lower())
 
     where = (" WHERE " + " AND ".join(clauses)) if clauses else ""
     with get_db() as conn:

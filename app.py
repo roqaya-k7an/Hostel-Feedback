@@ -136,14 +136,6 @@ def api_submit():
         "main_issues": (data.get("main_issues") or "").strip(),
         "suggestions": (data.get("suggestions") or "").strip(),
         "additional_comments": (data.get("additional_comments") or "").strip(),
-        "vip_interested": (data.get("vip_interested") or "").strip(),
-        "vip_willing_to_pay": (data.get("vip_willing_to_pay") or "").strip(),
-        "vip_features": ", ".join(data.get("vip_features", [])) if isinstance(data.get("vip_features"), list) else (data.get("vip_features") or ""),
-        "vip_reason": (data.get("vip_reason") or "").strip(),
-        "vip_expected_improvements": (data.get("vip_expected_improvements") or "").strip(),
-        "vip_barriers": (data.get("vip_barriers") or "").strip(),
-        "vip_phone": (data.get("vip_phone") or "").strip(),
-        "vip_email": (data.get("vip_email") or "").strip(),
     }
 
     ratings = data.get("ratings") or {}
@@ -200,8 +192,6 @@ def _filters_from_request():
         f["block"] = request.args["block"]
     if request.args.get("academic_level"):
         f["academic_level"] = request.args["academic_level"]
-    if request.args.get("vip_interested"):
-        f["vip_interested"] = request.args["vip_interested"]
     if request.args.get("sat_min"):
         f["sat_min"] = int(request.args["sat_min"])
     if request.args.get("sat_max"):
@@ -278,9 +268,7 @@ def _flat_headers():
         headers.append(f"rating_{key}")
         headers.append(f"comment_{key}")
     headers += ["main_issues", "suggestions", "additional_comments",
-                "vip_interested", "vip_willing_to_pay", "vip_features",
-                "vip_reason", "vip_expected_improvements", "vip_barriers",
-                "vip_phone", "vip_email", "created_at"]
+                "created_at"]
     return headers
 
 
@@ -292,9 +280,7 @@ def _row_values(s):
         vals.append(s.get(f"rating_{i}"))
         vals.append(s.get(f"comment_{i}"))
     vals += [s.get("main_issues"), s.get("suggestions"), s.get("additional_comments"),
-             s.get("vip_interested"), s.get("vip_willing_to_pay"), s.get("vip_features"),
-             s.get("vip_reason"), s.get("vip_expected_improvements"), s.get("vip_barriers"),
-             s.get("vip_phone"), s.get("vip_email"), s.get("created_at")]
+             s.get("created_at")]
     return vals
 
 
@@ -353,10 +339,10 @@ def _export_pdf(subs):
 
     k = data["kpis"]
     kpi_table = Table([
-        ["Total Responses", "Avg Satisfaction", "VIP Interest %", "Complaints"],
+        ["Total Responses", "Avg Satisfaction", "Complaints"],
         [k["total_responses"], k["avg_satisfaction"] or "—",
-         f'{k["vip_interest_pct"]}%', k["complaint_count"]],
-    ], colWidths=[4 * cm] * 4)
+         k["complaint_count"]],
+    ], colWidths=[4 * cm] * 3)
     kpi_table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), navy),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),

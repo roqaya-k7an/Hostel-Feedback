@@ -57,13 +57,6 @@
           <option value="4-5">4 – 5</option>
         </select>
       </div>
-      <div class="field">
-        <label data-i18n="filter_vip">VIP Interest</label>
-        <select id="f_vip"><option value="" data-i18n="filter_all">All</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </div>
       <button class="btn btn--ghost" id="resetFilters" data-i18n="filter_reset">Reset Filters</button>
     </div>
 
@@ -72,7 +65,6 @@
       <div class="kpi-grid">
         <div class="kpi kpi--navy"><div class="kpi__label" data-i18n="kpi_total">Total Responses</div><div class="kpi__value" id="kpiTotal">—</div></div>
         <div class="kpi kpi--teal"><div class="kpi__label" data-i18n="kpi_sat">Avg Satisfaction</div><div class="kpi__value" id="kpiSat">—</div><div class="kpi__sub">/ 5.0</div></div>
-        <div class="kpi kpi--gold"><div class="kpi__label" data-i18n="kpi_vip">VIP Interest</div><div class="kpi__value" id="kpiVip">—</div></div>
         <div class="kpi kpi--red"><div class="kpi__label" data-i18n="kpi_complaints">Complaints Flagged</div><div class="kpi__value" id="kpiComplaints">—</div></div>
       </div>
 
@@ -111,9 +103,9 @@
         </table>
       </div>
 
-      <!-- Academic + VIP -->
+      <!-- Academic breakdown -->
       <div class="chart-grid">
-        <div class="chart-card">
+        <div class="chart-card chart-card--wide">
           <h3 data-i18n="sec_academic">Academic Breakdown</h3>
           <table class="data-table">
             <thead><tr>
@@ -122,10 +114,6 @@
             </tr></thead>
             <tbody id="academicTable"></tbody>
           </table>
-        </div>
-        <div class="chart-card">
-          <h3 data-i18n="sec_vip">VIP Demand Analytics</h3>
-          <div id="vipPanel"></div>
         </div>
       </div>
     </div>
@@ -151,5 +139,5 @@
 </div>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=28"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=29"></script>
 {% endblock %}

@@ -7,16 +7,12 @@ const state = {
   residency: null,         // 'yes' | 'no'
   ratings: {},             // {1: 4, ...}
   comments: {},            // {1: '...'}
-  vip_interested: null,    // 'yes' | 'no'
-  vip_willing_to_pay: "",
-  vip_features: [],
-  vip_barriers_chips: [],
 };
 
 // Step sequence depends on residency
 function flowSteps() {
-  if (state.residency === "no") return ["residency", "vip", "confirm"];
-  return ["residency", "verify", "survey", "feedback", "vip", "confirm"];
+  if (state.residency === "no") return ["residency", "confirm"];
+  return ["residency", "verify", "survey", "feedback", "confirm"];
 }
 
 let idx = 0;
@@ -139,87 +135,6 @@ document.querySelectorAll(".feedback-field").forEach((field) => {
 });
 
 
-// ---- AC Questions (after VIP interest) -----------------------------------
-document.querySelectorAll("[data-vip]").forEach((c) => {
-  c.addEventListener("click", () => {
-    if (c.dataset.vip === "yes") {
-      document.getElementById("vipAcPrice").style.display = "block";
-    } else {
-      document.getElementById("vipAcPrice").style.display = "none";
-      document.getElementById("vipAcInterest").style.display = "none";
-    }
-  });
-});
-
-// AC Price buttons
-document.querySelectorAll(".ac-price").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    state.vip_ac_price = btn.dataset.price;
-    document.getElementById("vipAcInterest").style.display = "block";
-    document.querySelectorAll(".ac-price").forEach((b) => b.style.opacity = b === btn ? "1" : "0.5");
-  });
-});
-
-// AC Interest buttons
-document.querySelectorAll(".ac-interest").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    state.vip_ac_interest = btn.dataset.interest;
-    document.querySelectorAll(".ac-interest").forEach((b) => b.style.opacity = b === btn ? "1" : "0.5");
-  });
-});
-
-// ---- AC Questions ---
-document.querySelectorAll("[data-vip]").forEach(c => {
-  c.addEventListener("click", () => {
-    if (c.dataset.vip === "yes") {
-      document.getElementById("vipAcPrice").style.display = "block";
-    } else {
-      document.getElementById("vipAcPrice").style.display = "none";
-      document.getElementById("vipAcInterest").style.display = "none";
-    }
-  });
-});
-document.querySelectorAll(".ac-price").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.getElementById("vipAcInterest").style.display = "block";
-  });
-});
-document.querySelectorAll(".ac-interest").forEach(btn => {
-  btn.addEventListener("click", () => {
-    state.vip_ac_interest = btn.dataset.interest;
-  });
-});
-
-// ---- VIP interest ---------------------------------------------------------
-document.querySelectorAll("[data-vip]").forEach((c) => {
-  c.addEventListener("click", () => {
-    document.querySelectorAll("[data-vip]").forEach((x) => x.classList.remove("selected"));
-    c.classList.add("selected");
-    state.vip_interested = c.dataset.vip;
-    document.getElementById("vipYes").style.display = c.dataset.vip === "yes" ? "block" : "none";
-    document.getElementById("vipNo").style.display = c.dataset.vip === "no" ? "block" : "none";
-  });
-});
-document.querySelectorAll("#vipPay button").forEach((b) => {
-  b.addEventListener("click", () => {
-    document.querySelectorAll("#vipPay button").forEach((x) => x.classList.remove("active"));
-    b.classList.add("active");
-    state.vip_willing_to_pay = b.dataset.pay;
-  });
-});
-document.querySelectorAll("#vipFeatures .chip").forEach((chip) => {
-  chip.addEventListener("click", () => {
-    chip.classList.toggle("selected");
-    state.vip_features = [...document.querySelectorAll("#vipFeatures .chip.selected")].map((c) => c.dataset.feature);
-  });
-});
-document.querySelectorAll("#vipBarriers .chip").forEach((chip) => {
-  chip.addEventListener("click", () => {
-    chip.classList.toggle("selected");
-    state.vip_barriers_chips = [...document.querySelectorAll("#vipBarriers .chip.selected")].map((c) => c.dataset.barrier);
-  });
-});
-
 // ---- Validation -----------------------------------------------------------
 function val(id) { return (document.getElementById(id).value || "").trim(); }
 
@@ -277,39 +192,21 @@ function validateSurvey() {
   return ok;
 }
 
-function validateVip() {
-  if (!state.vip_interested) {
-    alert(t("vip_q_interested"));
-    return false;
-  }
-  return true;
-}
-
 // ---- Submit ---------------------------------------------------------------
 async function submitAll() {
   const payload = {
-    is_resident: state.residency === "yes",
-    student_id: state.residency === "yes" ? val("student_id") : val("vip_email"),
-    full_name: state.residency === "yes" ? val("full_name") : "",
-    email: state.residency === "yes" ? byId("email") : val("vip_email"),
-    room_number: state.residency === "yes" ? val("room_number") : "",
-    block: state.residency === "yes" ? val("block") : "",
-    academic_level: state.residency === "yes" ? val("academic_level") : "",
+    is_resident: true,
+    student_id: val("student_id"),
+    full_name: val("full_name"),
+    email: byId("email"),
+    room_number: val("room_number"),
+    block: val("block"),
+    academic_level: val("academic_level"),
     ratings: state.ratings,
     comments: state.comments,
     main_issues: byId("main_issues"),
     suggestions: byId("suggestions"),
     additional_comments: byId("additional_comments"),
-    vip_interested: state.vip_interested,
-    vip_willing_to_pay: state.vip_willing_to_pay,
-    vip_features: state.vip_features,
-    vip_reason: byId("vip_reason"),
-    vip_expected_improvements: byId("vip_expected_improvements"),
-    vip_barriers: state.vip_interested === "no"
-      ? state.vip_barriers_chips.join(", ")
-      : byId("vip_barriers_yes"),
-    vip_phone: byId("vip_phone"),
-    vip_email: byId("vip_email"),
   };
 
   btnNext.disabled = true;
@@ -342,10 +239,10 @@ btnNext.addEventListener("click", async () => {
   if (name === "residency" && !validateResidency()) return;
   if (name === "verify" && !(await validateVerify())) return;
   if (name === "survey" && !validateSurvey()) return;
-  if (name === "vip") {
-    if (!validateVip()) return;
-    if (await submitAll()) { idx++; showStep(); }
-    return;
+
+  // Last data step before the thank-you screen => send the response
+  if (flowSteps()[idx + 1] === "confirm") {
+    if (!(await submitAll())) return;
   }
 
   idx++;
@@ -405,19 +302,4 @@ document.getElementById('verifyBtn')?.addEventListener('click', async function()
     console.error('Verification failed:', e);
     alert('Verification failed. Please try again.');
   }
-});
-
-
-// AC interest auto-show
-document.querySelectorAll("[data-vip]").forEach(function (c) {
-  c.addEventListener("click", function () {
-    var el = document.getElementById("vipAcInterest");
-    if (el) el.style.display = c.dataset.vip === "yes" ? "block" : "none";
-  });
-});
-document.querySelectorAll(".ac-interest").forEach(function (b) {
-  b.addEventListener("click", function () {
-    document.querySelectorAll(".ac-interest").forEach(function (x) { x.classList.remove("active"); });
-    b.classList.add("active");
-  });
 });

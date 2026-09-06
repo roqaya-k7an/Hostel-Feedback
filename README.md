@@ -41,14 +41,13 @@ Students just open the survey link — no account, no setup. One response per st
 
 1. **Cover page** — attractive glass hero with a *Get Started* call-to-action
 2. **Role selection** — Student / Admin
-3. **Residency check** — "Are you a hostel resident?" *(No → jumps straight to the VIP module)*
+3. **Residency check** — "Are you a hostel resident?" *(No → straight to the thank-you screen)*
 4. **Verification** — Registration Number + University Email
    - Accepts IIUI formats using `/` **or** `-` separators, e.g. `002136/MSDS/S24` or `4001-FBAS`
    - All fields required · one submission per student (duplicate prevention)
 5. **Survey** — **14 services** rated 1–5; a score of 1–2 requires a short comment
 6. **Feedback** — 3 optional fields with an *"I'd like to comment / Nothing to add"* toggle
-7. **VIP housing module** — branches on Yes/No; captures demand, features, and contact details
-8. **Confirmation** — thank-you screen (no dashboard access for students)
+7. **Confirmation** — thank-you screen (no dashboard access for students)
 
 ### The 14 rated services
 Cleanliness · Maintenance · WiFi / Internet · Security · Food Quality · Dining Staff Behaviour · Dining Cleanliness · Warden Behaviour · Hostel Clerk Behaviour · Medical Center · Gym Facilities · Tuckshop · Transport Facilities · Overall Experience
@@ -71,13 +70,12 @@ The system verifies students **without needing a pre-uploaded roster**:
 
 ## 📊 Admin Dashboard *(single private account)*
 
-- **KPIs** — total responses, average satisfaction, VIP interest %, complaints flagged
+- **KPIs** — total responses, average satisfaction, complaints flagged
 - **Charts** — bar (per service), doughnut (distribution), trend line, blocks × services heatmap
 - **Service health scores** — 0–100 with green / yellow / red status
 - **Block analytics (A–G)** — with click-through comment drill-down
 - **Academic breakdown** — Bachelor's / Master's / PhD
-- **VIP demand analytics** — interest, price acceptance, feature demand, reasons
-- **Filters** — block / level / satisfaction / VIP re-compute everything live
+- **Filters** — block / level / satisfaction re-compute everything live
 - **Exports** — CSV, Excel, PDF (respect the active filters)
 - **Roster import** — upload a student CSV from the dashboard
 
@@ -140,7 +138,7 @@ A ready-to-use sample lives in **`sample_residents.csv`**.
 | Table | Purpose |
 |---|---|
 | **residents** | Reference roster used to strengthen verification |
-| **submissions** | One row per student — 14 ratings + comments, feedback, and VIP fields |
+| **submissions** | One row per student — 14 ratings + comments, and open feedback |
 
 The database is created automatically on first run.
 

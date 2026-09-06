@@ -31,10 +31,6 @@ def compute(filters=None):
     overall_scores = [s.get(f"rating_{OVERALL_IDX}") for s in survey_subs]
     avg_satisfaction = _avg(overall_scores)
 
-    vip_yes = sum(1 for s in subs if (s.get("vip_interested") or "").lower() == "yes")
-    vip_total = sum(1 for s in subs if s.get("vip_interested"))
-    vip_interest_pct = round(100 * vip_yes / vip_total, 1) if vip_total else 0
-
     # A complaint = any rating <= threshold across categories
     complaint_count = 0
     for s in survey_subs:
@@ -142,37 +138,6 @@ def compute(filters=None):
     best_service = max(rated, key=lambda h: h["avg"]) if rated else None
     worst_service = min(rated, key=lambda h: h["avg"]) if rated else None
 
-    # ---- VIP analytics -----------------------------------------------------
-    vip_features = Counter()
-    vip_reasons = []
-    vip_rejections = Counter()
-    price_accept = Counter()
-    for s in subs:
-        if (s.get("vip_interested") or "").lower() == "yes":
-            for f in (s.get("vip_features") or "").split(","):
-                f = f.strip()
-                if f:
-                    vip_features[f] += 1
-            if s.get("vip_reason"):
-                vip_reasons.append(s["vip_reason"])
-            wp = (s.get("vip_willing_to_pay") or "").strip()
-            if wp:
-                price_accept[wp] += 1
-        elif (s.get("vip_interested") or "").lower() == "no":
-            b = (s.get("vip_barriers") or "").strip()
-            if b:
-                vip_rejections[b] += 1
-
-    vip = {
-        "interested": vip_yes,
-        "not_interested": sum(1 for s in subs if (s.get("vip_interested") or "").lower() == "no"),
-        "interest_pct": vip_interest_pct,
-        "features": dict(vip_features),
-        "reasons": vip_reasons[:20],
-        "rejections": dict(vip_rejections),
-        "price_acceptance": dict(price_accept),
-    }
-
     # ---- Worst block highlight --------------------------------------------
     rated_blocks = [b for b in block_analytics if b["satisfaction"] is not None]
     worst_block = min(rated_blocks, key=lambda b: b["satisfaction"]) if rated_blocks else None
@@ -182,7 +147,6 @@ def compute(filters=None):
             "total_responses": total,
             "total_surveys": total_surveys,
             "avg_satisfaction": avg_satisfaction,
-            "vip_interest_pct": vip_interest_pct,
             "complaint_count": complaint_count,
         },
         "category_avgs": category_avgs,
@@ -195,7 +159,6 @@ def compute(filters=None):
         "best_service": best_service,
         "worst_service": worst_service,
         "worst_block": worst_block,
-        "vip": vip,
         "categories": [{"key": k, "en": en, "ar": ar} for k, en, ar in CATS],
     }
 
