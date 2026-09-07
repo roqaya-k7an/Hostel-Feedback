@@ -4,15 +4,14 @@
 const LOW = window.LOW_THRESHOLD || 2;
 
 const state = {
-  residency: null,         // 'yes' | 'no'
+  residency: "yes",         // 'yes' | 'no'
   ratings: {},             // {1: 4, ...}
   comments: {},            // {1: '...'}
 };
 
 // Step sequence depends on residency
 function flowSteps() {
-  if (state.residency === "no") return ["residency", "confirm"];
-  return ["residency", "verify", "survey", "feedback", "confirm"];
+  return ["verify", "survey", "feedback", "vip", "confirm"];
 }
 
 let idx = 0;
