@@ -7,14 +7,12 @@
 **A bilingual (English / العربية + RTL) web app for collecting verified student housing feedback — and giving administration a live, decision-support analytics dashboard.**
 
 <p>
-  <img alt="Python"   src="https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white">
-  <img alt="Flask"    src="https://img.shields.io/badge/Flask-Web%20Framework-000000?logo=flask&logoColor=white">
-  <img alt="SQLite"   src="https://img.shields.io/badge/SQLite-Database-003B57?logo=sqlite&logoColor=white">
-  <img alt="Supabase" src="https://img.shields.io/badge/Supabase-PostgreSQL-3FCF8E?logo=supabase&logoColor=white">
-  <img alt="Chart.js" src="https://img.shields.io/badge/Chart.js-Analytics-FF6384?logo=chartdotjs&logoColor=white">
-  <img alt="Railway"  src="https://img.shields.io/badge/Deploy-Railway-0B0D0E?logo=railway&logoColor=white">
-  <img alt="Netlify"  src="https://img.shields.io/badge/Deploy-Netlify-00C7B7?logo=netlify&logoColor=white">
-  <img alt="i18n"     src="https://img.shields.io/badge/i18n-EN%20%2F%20عربي-6C2BD9">
+  <img alt="Netlify"    src="https://img.shields.io/badge/Deployed-Netlify-00C7B7?logo=netlify&logoColor=white">
+  <img alt="Supabase"   src="https://img.shields.io/badge/Database-Supabase-3FCF8E?logo=supabase&logoColor=white">
+  <img alt="JavaScript" src="https://img.shields.io/badge/Serverless-Functions-F7DF1E?logo=javascript&logoColor=black">
+  <img alt="Chart.js"   src="https://img.shields.io/badge/Chart.js-Analytics-FF6384?logo=chartdotjs&logoColor=white">
+  <img alt="HTML5"      src="https://img.shields.io/badge/Frontend-HTML5%20%2F%20CSS3-E34F26?logo=html5&logoColor=white">
+  <img alt="i18n"       src="https://img.shields.io/badge/i18n-EN%20%2F%20عربي-6C2BD9">
 </p>
 
 <p>
@@ -39,8 +37,11 @@ with a clean, modern interface that works on phones and desktops alike.
 
 A student opens one link — no account, no setup — rates **15 hostel services**,
 and submits once. Behind a private login, the administration sees live KPIs,
-charts, service health scores, and per-block breakdowns, and can export
-everything to CSV, Excel, or PDF.
+charts, service health scores, and per-block breakdowns, and can export the
+data to CSV.
+
+The app is deployed on **Netlify**, with a static frontend, a **serverless
+API** (Netlify Functions), and a **Supabase (PostgreSQL)** database.
 
 ---
 
@@ -82,8 +83,8 @@ everything to CSV, Excel, or PDF.
 - 🚫 **Duplicate-proof** — one submission per registration number
 - 📊 **Live analytics dashboard** — KPIs, charts, heatmaps, and service health scores
 - 🧩 **Block & academic-level breakdowns** — drill into comments per hostel block
-- 📥 **Export anywhere** — CSV, Excel, and PDF reports that respect active filters
-- ⚡ **Lightweight & portable** — runs on Flask + SQLite, or serverless on Netlify + Supabase
+- 📥 **CSV export** — download all responses (respects the active filters)
+- ⚡ **Serverless & scalable** — static frontend + Netlify Functions + Supabase, no server to manage
 
 ---
 
@@ -128,7 +129,7 @@ explanatory comment so the feedback is actionable.
 - **Block analytics (A–G)** — with click-through comment drill-down
 - **Academic breakdown** — Bachelor's / Master's / PhD
 - **Live filters** — block, level, and satisfaction instantly re-compute every metric
-- **Exports** — CSV, Excel, and PDF (all respect the active filters)
+- **CSV export** — download the filtered responses in one click
 
 ---
 
@@ -136,61 +137,62 @@ explanatory comment so the feedback is actionable.
 
 | Layer | Technology |
 |-------|------------|
-| Backend | Flask (Python) · or Netlify serverless functions (Node.js) |
-| Database | SQLite (local/Railway) · or Supabase (PostgreSQL) |
-| Frontend | Hand-written CSS design system + vanilla JavaScript |
+| Hosting | **Netlify** |
+| Backend | **Netlify Functions** (serverless, Node.js) |
+| Database | **Supabase** (PostgreSQL, with Row Level Security) |
+| Frontend | Static HTML + hand-written CSS design system + vanilla JavaScript |
 | Charts | Chart.js (via CDN) |
-| i18n | Custom bilingual EN/AR engine with RTL support |
-| Server | Gunicorn |
-| Hosting | Railway (persistent volume) · or Netlify |
+| i18n | Custom bilingual EN / AR engine with RTL support |
 
 ---
 
 ## 🚀 Getting Started
 
-Run the Flask app locally in a few commands:
+Run the project locally with the [Netlify CLI](https://docs.netlify.com/cli/get-started/):
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/roqaya-k7an/Hostel-Feedback.git
 cd Hostel-Feedback
 
-# 2. Create a virtual environment and install dependencies
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+# 2. Install dependencies
+npm install
 
-# 3. Run the app
-python app.py
+# 3. Create a Supabase project and run db/schema.sql in the SQL Editor,
+#    then add your keys to a .env file (see the variables below)
+
+# 4. Start the local dev server
+netlify dev
 ```
 
-Then open **<http://localhost:5000>** in your browser.
-The SQLite database is created automatically on first run.
+Required environment variables:
+
+| Variable | Purpose |
+|----------|---------|
+| `SUPABASE_URL` | Your Supabase project URL |
+| `SUPABASE_SERVICE_KEY` | Supabase **service_role** key (server-side only) |
+| `SECRET_KEY` | Session security (any long random string) |
+| `ADMIN_USERNAME` | Admin dashboard login |
+| `ADMIN_PASSWORD` | Admin dashboard password |
 
 ---
 
 ## ☁️ Deployment
 
-The project can be deployed two ways — pick whichever suits you.
+The app is deployed on **Netlify** with a **Supabase** database.
 
-### Option A — Railway (Flask + SQLite)
+1. **Create the database** — in Supabase, run [`db/schema.sql`](db/schema.sql)
+   to create the `residents` and `submissions` tables (Row Level Security on).
+2. **Import the repo into Netlify** — Netlify reads [`netlify.toml`](netlify.toml),
+   so the publish directory (`site`) and functions directory
+   (`netlify/functions`) are configured automatically.
+3. **Add the environment variables** listed above in
+   *Site settings → Environment variables*.
+4. **Deploy.**
 
-- The **`Procfile`** starts the app with Gunicorn: `web: gunicorn app:app --bind 0.0.0.0:$PORT`
-- A **persistent volume** is mounted at `/data` so the SQLite database survives restarts
-- Configuration is supplied through environment variables:
-
-| Variable | Purpose | Example |
-|----------|---------|---------|
-| `DATABASE_PATH` | Where the SQLite file lives (on the volume) | `/data/feedback.db` |
-| `SECRET_KEY` | Flask session security | *(long random string)* |
-| `ADMIN_USERNAME` | Dashboard login | `admin` |
-| `ADMIN_PASSWORD` | Dashboard password | *(a strong password)* |
-
-### Option B — Netlify (serverless + Supabase)
-
-A serverless build of the app runs the frontend as static pages and the API as
-Netlify Functions, storing data in **Supabase (PostgreSQL)** with Row Level
-Security enabled — the database is only ever reached server-side. Full
-step-by-step instructions are in **[`DEPLOY_NETLIFY.md`](DEPLOY_NETLIFY.md)**.
+> 📘 Full step-by-step instructions are in **[`DEPLOY_NETLIFY.md`](DEPLOY_NETLIFY.md)**.
+> The `service_role` key is used **only inside the serverless functions**, never
+> exposed to the browser.
 
 ---
 
@@ -201,8 +203,7 @@ step-by-step instructions are in **[`DEPLOY_NETLIFY.md`](DEPLOY_NETLIFY.md)**.
 | **residents** | Optional reference roster used to strengthen verification |
 | **submissions** | One row per student — 15 service ratings + comments, plus open feedback |
 
-The schema for the hosted (PostgreSQL) build lives in **`db/schema.sql`**; the
-Flask build creates its SQLite tables automatically on first run.
+The full PostgreSQL schema lives in **[`db/schema.sql`](db/schema.sql)**.
 
 ---
 
@@ -210,18 +211,25 @@ Flask build creates its SQLite tables automatically on first run.
 
 ```
 .
-├── app.py              # Flask routes & API
-├── config.py           # Settings, the 15 service categories, verification patterns
-├── database.py         # SQLite data layer
-├── analytics.py        # Dashboard metrics computation
-├── requirements.txt    # Python dependencies
-├── Procfile            # Railway / Gunicorn start command
-├── sample_residents.csv
-├── templates/          # Jinja2 HTML (cover, role, student, admin…)
-└── static/
-    ├── css/style.css   # Design system
-    ├── img/            # Logo & imagery
-    └── js/             # i18n.js, student.js, dashboard.js
+├── site/                       # Static frontend (served by Netlify)
+│   ├── index.html              # Cover page
+│   ├── start.html              # Role selection
+│   ├── student.html            # Survey flow
+│   ├── admin.html              # Admin login
+│   ├── admin/dashboard.html    # Analytics dashboard
+│   └── static/
+│       ├── css/style.css       # Design system
+│       ├── img/                # Logo & imagery
+│       └── js/                 # i18n.js, student.js, dashboard.js
+├── netlify/functions/          # Serverless API (Node.js + Supabase)
+│   ├── verify.js   submit.js
+│   ├── analytics.js  block.js  submissions.js  export.js
+│   └── admin-login.js  admin-logout.js  submission-delete.js
+├── db/
+│   ├── schema.sql              # Supabase (PostgreSQL) schema
+│   └── migration_add_rating_15.sql
+├── netlify.toml                # Netlify build & API redirects
+└── DEPLOY_NETLIFY.md           # Deployment guide
 ```
 
 ---
@@ -232,8 +240,8 @@ Flask build creates its SQLite tables automatically on first run.
 
 [![GitHub](https://img.shields.io/badge/GitHub-roqaya--k7an-181717?logo=github&logoColor=white)](https://github.com/roqaya-k7an)
 
-> Designed and built end-to-end: bilingual UI/UX, Flask & serverless backends,
-> the analytics dashboard, and the deployment pipeline.
+> Designed and built end-to-end: bilingual UI/UX, the serverless API,
+> the Supabase database, the analytics dashboard, and the Netlify deployment.
 
 ---
 
